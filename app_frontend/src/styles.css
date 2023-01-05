@@ -1,0 +1,26 @@
+@import url('https://fonts.cdnfonts.com/css/pokemon-solid');
+
+*{
+    background-color: rgb(246, 216, 70);
+    align-content: center;
+    text-align: center;
+    
+}
+
+h1{
+    font-family: 'Pokemon Solid', sans-serif;
+    color: red;
+}
+
+h4{
+    color: red;
+}
+.pokemonform{
+    display: grid;
+    grid-auto-rows: auto;
+    row-gap: 1rem;
+}
+
+.btn{
+    background-color: brown;
+}
