@@ -4,7 +4,7 @@
 <ng-container *ngIf="selectedProject; else projectList">
   <button *ngIf="selectedProject" (click)="selectedProject = null">Show all projects</button>
 
-  <h2>{{ selectedProject.title }}</h2>
+  <h2>{{ selectedProject.title | uppercase }}</h2>
   <p>{{ selectedProject.body }}</p>
   <p>Published on {{ selectedProject.published_date }}</p>
   <p>Category: {{ selectedProject.category?.name }}</p>
@@ -23,7 +23,9 @@
       <p>Category: {{ project.category?.name }}</p>
 
       <ng-container *ngIf="project.tags">
-        <p>Tags: <span *ngFor="let tag of project.tags">{{ tag.name }}</span></p>
+        <p>Tags: <span *ngFor="let tag of project.tags">
+          <a (click)="handleTagFilter(tag)">{{ tag.name }}</a>
+        </span></p>
       </ng-container>
   </div>
 </div>
