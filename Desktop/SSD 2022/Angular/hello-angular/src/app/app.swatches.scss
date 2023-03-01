@@ -1,0 +1,13 @@
+div {
+    margin: 0;
+    &:hover {
+      margin-left: 0.3rem;
+    }
+    &.selected {
+      font-size: 1.2rem;
+      font-weight: bold;
+      &::before {
+        content: "\00BB";
+      }
+    }
+  }
