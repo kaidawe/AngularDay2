@@ -21,7 +21,7 @@ div:hover {
     background-color: #f5f5f5;
   }
 
-  .side-menu{
+  .sidebar{
     display: flex;
     flex-direction: column;
     align-items: center;
