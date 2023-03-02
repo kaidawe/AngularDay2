@@ -1,58 +1,82 @@
+<header>
+  <h2>{{ title }}</h2>
+</header>
+<div [ngClass]="{ wrapper: true }">
+  <div [ngClass]="{ sidebar: true }">
+    <div [ngClass]="{ filterSection: true }">
+      <h2 *ngIf="categoryFilter|| tagFilter">Filter</h2>
+      <section>
+        <div *ngIf="categoryFilter" >{{ categoryFilter.name }}</div>
+        <div *ngIf="tagFilter">{{ tagFilter.name }}</div>
+        <p *ngIf="categoryFilter || tagFilter" (click)="clearFilters()">
+          &#128465;
+        </p>
+      </section>
+    </div>
 
-<h1 *ngIf="title">{{ title }}!</h1>
-
-<ng-container *ngIf="selectedProject; else projectList">
-  <button *ngIf="selectedProject" (click)="selectedProject = null">Show all projects</button>
-
-  <h2>{{ selectedProject.title }}</h2>
-  <p>{{ selectedProject.body }}</p>
-  <p>Published on {{ selectedProject.published_date }}</p>
-  <p>Category: {{ selectedProject.category?.name }}</p>
-
-  <ng-container *ngIf="selectedProject.tags">
-    <p>Tags: <span *ngFor="let tag of selectedProject.tags">{{ tag.name }}, </span></p>
-  </ng-container>
-</ng-container>
-
-<ng-template #projectList>
-  <div *ngFor="let project of projects" (click)="handleProjectClick(project)">
-    <div *ngIf="!categoryFilter || categoryFilter.id == project.category?.id">
-      <div *ngIf="!tagFilter || project.tags?.includes(tagFilter)">
-      <h2>{{ project.title }}</h2>
+    <div>
+      <h2>Categories</h2>
+      <article id="categories">
+        <app-categories
+          [categoryFilter]="categoryFilter"
+          (newCategoryFilterEvent)="setCategoryFilter($event)"
+        ></app-categories>
+      </article>
+      <!-- <div
+        *ngFor="let category of categories"
+        (click)="handleCategoryClick(category)"
+      >
+        {{ category.name }}
+      </div> -->
+    </div>
+    <div>
+      <h2>Tags</h2>
+      <article id="tag">
+        <app-tags
+          [tagFilter]="tagFilter"
+          (newTagFilterEvent)="setTagFilter($event)"
+        ></app-tags>
+      </article>
+      <!-- <div *ngFor="let tag of tags" (click)="handleTagClick(tag)">
+        {{ tag.name }}
+      </div> -->
+    </div>
+  </div>
+  <div [ngClass]="{ projectCards: true }">
+    <app-projects
+      [categoryFilter]="categoryFilter"
+      (newCategoryFilterEvent)="setCategoryFilter($event)"
+      [tagFilter]="tagFilter"
+      (newTagFilterEvent)="setTagFilter($event)"
+    ></app-projects>
+    <!-- <div
+      *ngFor="let project of projects | projectFilter : selectedTag"
+      [class.hidden]="
+        selectedCategory && project.category?.id != selectedCategory.id
+      "
+    >
+      <h2>{{ project.title | uppercase }}</h2>
       <p>{{ project.excerpt }}</p>
-      <p>Category: {{ project.category?.name }}</p>
-
-      <ng-container *ngIf="project.tags">
-        <p>Tags: <span *ngFor="let tag of project.tags">{{ tag.name }}</span></p>
-      </ng-container>
+      <p
+        [ngClass]="{
+          hidden: true
+        }"
+      >
+        {{ project.body }}
+      </p>
+      <p>{{ project.published_date }}</p>
+      <p
+        *ngIf="project.category != null"
+        (click)="handleCategoryClick(project.category)"
+      >
+        {{ project.category.name }}
+      </p>
+      <p *ngFor="let tag of project.tags" (click)="handleTagClick(tag)">
+        {{ tag.name }}
+      </p>
+    </div> -->
   </div>
 </div>
-  </div>
-</ng-template>
-
-
-<div [ngClass]="'side-menu'">
-  <div class="flex flex-col">
-    <div class="flex flex-row justify-between">
-      <h3>Categories</h3>
-      <button (click)="clearFilters()">Show all</button>
-    </div>
-    <div *ngFor="let category of categories" (click)="handleCategoryFilter(category)">
-      <p>{{ category.name }}</p>
-    </div>
-  </div>
-  <div class="flex flex-col">
-    <div class="flex flex-row justify-between">
-      <h3>Tags</h3>
-      <button (click)="clearFilters()">Show all</button>
-    </div>
-    <div *ngFor="let tag of tags" (click)="handleTagFilter(tag)">
-      <p>{{ tag.name }}</p>
-    </div>
-  </div>
-</div>
-
-
 
 <footer>
   <p>&copy; Copyright Haley Dawe 2021</p>
